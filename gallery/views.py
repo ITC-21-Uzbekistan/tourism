@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from own_packages.CommonResult import CommonResult, CommonMessageResult
 from .serializers import ImageSerializer
+from relation.models import PrimaryKeysOfImages
 
 import base64
 from PIL import Image
@@ -66,6 +67,11 @@ def create_image(request):
         )
         try:
             obj_image.save()
+            # ---------------------------------
+            PrimaryKeysOfImages.objects.create(
+                primaykeyofimage=obj_image.id
+            )
+            # ---------------------------------
         except Exception as exept:
             print(exept)
         else:
@@ -121,10 +127,16 @@ def delete_image(request, pk):
     result = CommonMessageResult()
     try:
         data = models.Image.objects.get(id=pk)
+        # --------------------------------------------------------------------------
+        primarykey = PrimaryKeysOfImages.objects.get(primaykeyofimage=int(data.id))
+        # --------------------------------------------------------------------------
     except Exception as ex:
         print(ex)
     else:
         try:
+            # -----------------
+            primarykey.delete()
+            # -----------------
             data.delete()
         except Exception as ex:
             print(ex)
