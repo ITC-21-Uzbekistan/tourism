@@ -46,8 +46,7 @@ def get_detail_image(request, pk):
 @api_view(['POST'])
 def create_image(request):
     result = CommonMessageResult()
-    if 'image' in request.data and request.data.get('image') is not None and 'type' in request.data \
-            and request.data.get('type') is not None:
+    if 'image' in request.data and request.data.get('image') is not None:
         img = Image.open(request.data.get('image'))
 
         buffered = BytesIO()
@@ -59,10 +58,10 @@ def create_image(request):
             region=str(request.data.get('region')),
             shrine=str(request.data.get('shrine')),
             tour=str(request.data.get('tour')),
-            type=str(request.data.get('type')),
+            type=str(request.data.get('type_image')),
             name=str(request.data.get('image')),
             image=str(img_str),
-            altText=str(request.data.get('altText')),
+            altText=str(request.data.get('alt_text')),
             description=str(request.data.get('description'))
         )
         try:
@@ -89,8 +88,7 @@ def update_image(request, pk):
     except Exception as ex:
         print(ex)
     else:
-        if 'image' in request.data and request.data.get('image') is not None and 'type' in request.data \
-                and request.data.get('type') is not None:
+        if 'image' in request.data and request.data.get('image') is not None:
             img = Image.open(request.data.get('image'))
 
             buffered = BytesIO()
@@ -101,10 +99,10 @@ def update_image(request, pk):
             obj.region = str(request.data.get('region'))
             obj.shrine = str(request.data.get('shrine'))
             obj.tour = str(request.data.get('tour'))
-            obj.type = str(request.data.get('type'))
+            obj.type = str(request.data.get('type_image'))
             obj.name = str(request.data.get('image'))
             obj.image = str(img_str)
-            obj.altText = str(request.data.get('altText'))
+            obj.altText = str(request.data.get('alt_text'))
             obj.description = str(request.data.get('description'))
 
             try:

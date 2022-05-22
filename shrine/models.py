@@ -1,19 +1,29 @@
 from django.db import models
 from country.models import Country
+from language.models import Language
 from region.models import Region
 from relation.models import PrimaryKeysOfImages
 
 
 class Shrine(models.Model):
-    name = models.CharField(max_length=255)
-    info = models.TextField()
-    url = models.CharField(max_length=1000)
-    location = models.CharField(max_length=1000)
+    shrine_name = models.CharField(max_length=255)
+    shrine_info = models.TextField()
+    shrine_url = models.CharField(max_length=1000)
+    shrine_location_longitude = models.FloatField()
+    shrine_location_latitude = models.FloatField()
+    shrine_meta_keywords = models.TextField()
 
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
 
-    images = models.ManyToManyField(PrimaryKeysOfImages)
+    shrine_images = models.ManyToManyField(PrimaryKeysOfImages)
 
     def __str__(self):
         return self.name
+
+
+class ContentShrine(models.Model):
+    shrine = models.ForeignKey(Shrine, on_delete=models.SET_NULL, null=True)
+    language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
+    shrine_name = models.CharField(max_length=255)
+    shrine_info = models.TextField()

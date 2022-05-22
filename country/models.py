@@ -1,14 +1,23 @@
 from django.db import models
 from relation.models import PrimaryKeysOfImages
+from language.models import Language
 
 
 class Country(models.Model):
-    name = models.CharField(max_length=255)
-    info = models.TextField()
-    url = models.CharField(max_length=255)
-    location = models.CharField(max_length=1000)
+    country_name = models.CharField(max_length=255)
+    country_info = models.TextField()
+    country_url = models.CharField(max_length=255)
+    country_meta_keywords = models.TextField()
 
-    images = models.ManyToManyField(PrimaryKeysOfImages)
+    country_images = models.ManyToManyField(PrimaryKeysOfImages)
 
     def __str__(self):
-        return self.name
+        return self.country_name
+
+
+class ContentCountry(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+    language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
+    country_name = models.CharField(max_length=255)
+    country_info = models.TextField()
+

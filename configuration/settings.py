@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'tour',
     'gallery',
     'relation',
+    'language',
 
     'rest_framework',
     'corsheaders',
