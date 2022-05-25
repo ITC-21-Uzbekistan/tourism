@@ -19,7 +19,7 @@ def get_countries(request):
     else:
         data = []
         for country in countries:
-            # I have stopped here
+            # I  have stopped here
             content = ContentCountry.objects.get(country=country, language=lang)
             data.append({
                 "country_name": ContentCountry.objects.get(country)

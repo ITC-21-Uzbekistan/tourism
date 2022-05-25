@@ -1,3 +1,14 @@
 from django.contrib import admin
+from .models import ContentCountry, Country
 
-# Register your models here.
+
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'country_name', 'country_info', 'country_url', 'country_meta_keywords']
+
+
+class ContentCountryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'country', 'language', 'country_name', 'country_info']
+
+
+admin.site.register(Country, CountryAdmin)
+admin.site.register(ContentCountry, ContentCountryAdmin)
