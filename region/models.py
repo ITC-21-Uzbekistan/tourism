@@ -23,3 +23,6 @@ class ContentRegion(models.Model):
     language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
     region_name = models.CharField(max_length=255)
     region_info = models.TextField()
+
+
+## this is comment
