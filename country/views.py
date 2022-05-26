@@ -107,3 +107,6 @@ def delete_country(request, pk):
             result.set_true()
     finally:
         return Response(result.__dict__)
+
+
+# hello guys
