@@ -1,8 +1,8 @@
 from django.db import models
-from country.models import Country
-from region.models import Region
-from shrine.models import Shrine
-from tour.models import Tour
+# from country.models import Country
+# from region.models import Region
+# from shrine.models import Shrine
+# from tour.models import Tour
 from language.models import Language
 
 
@@ -20,16 +20,16 @@ class ContentTypeImage(models.Model):
 
 
 class Image(models.Model):
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
-    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
-    shrine = models.ForeignKey(Shrine, on_delete=models.SET_NULL, null=True)
-    tour = models.ForeignKey(Tour, on_delete=models.SET_NULL, null=True)
+    # country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+    # region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
+    # shrine = models.ForeignKey(Shrine, on_delete=models.SET_NULL, null=True)
+    # tour = models.ForeignKey(Tour, on_delete=models.SET_NULL, null=True)
     type_image = models.ForeignKey(TypeImage, on_delete=models.SET_NULL, null=True)
 
     name = models.CharField(max_length=255)
-    image = models.TextField()
-    alt_text = models.CharField(max_length=500)
-    description = models.TextField()
+    image = models.ImageField(upload_to='images')
+    # alt_text = models.CharField(max_length=500)
+    # description = models.TextField()
 
     def __str__(self):
         return self.name

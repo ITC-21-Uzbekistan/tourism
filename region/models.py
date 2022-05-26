@@ -2,20 +2,21 @@ from django.db import models
 from country.models import Country
 from language.models import Language
 from relation.models import PrimaryKeysOfImages
+from gallery.models import Image
 
 
 class Region(models.Model):
     region_name = models.CharField(max_length=255)
-    region_info = models.TextField()
+    # region_info = models.TextField()
     region_url = models.CharField(max_length=500)
     region_meta_keywords = models.TextField()
 
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
 
-    region_images = models.ManyToManyField(PrimaryKeysOfImages)
+    region_images = models.ManyToManyField(Image, db_table="region_table")
 
     def __str__(self):
-        return self.name
+        return self.region_name
 
 
 class ContentRegion(models.Model):
@@ -23,6 +24,3 @@ class ContentRegion(models.Model):
     language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
     region_name = models.CharField(max_length=255)
     region_info = models.TextField()
-
-
-## this is comment
