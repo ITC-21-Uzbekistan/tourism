@@ -7,3 +7,6 @@ class Language(models.Model):
 
     def __str__(self):
         return self.language_name
+
+    class Meta:
+        ordering = ['id']
