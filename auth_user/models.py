@@ -82,3 +82,5 @@ class User(AbstractBaseUser, PermissionsMixin):  # PermissionsMixin
             return self.profile_image.url
         except Exception as e:
             return ''
+
+#  new commit
