@@ -1,5 +1,6 @@
 from django.db import models
 
+from gallery.models import Image
 from own_packages.abstractclass import AbstractCLass
 from relation.models import PrimaryKeysOfImages
 from language.models import Language
