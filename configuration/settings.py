@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'gallery',
     'relation',
     'language',
-    'testik',
 
     'rest_framework',
     'corsheaders',

@@ -4,6 +4,7 @@ from django.db import models
 # from shrine.models import Shrine
 # from tour.models import Tour
 from language.models import Language
+from own_packages.abstractclass import AbstractCLass
 
 
 class TypeImage(models.Model):
@@ -19,7 +20,7 @@ class ContentTypeImage(models.Model):
     type_name = models.CharField(max_length=255)
 
 
-class Image(models.Model):
+class Image(AbstractCLass):
     # country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
     # region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     # shrine = models.ForeignKey(Shrine, on_delete=models.SET_NULL, null=True)

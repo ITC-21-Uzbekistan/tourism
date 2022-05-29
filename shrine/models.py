@@ -1,12 +1,13 @@
 from django.db import models
 from country.models import Country
 from language.models import Language
+from own_packages.abstractclass import AbstractCLass
 from region.models import Region
 from relation.models import PrimaryKeysOfImages
 from gallery.models import Image
 
 
-class Shrine(models.Model):
+class Shrine(AbstractCLass):
     shrine_name = models.CharField(max_length=255)
     # shrine_info = models.TextField()
     shrine_url = models.CharField(max_length=1000)

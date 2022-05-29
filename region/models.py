@@ -1,11 +1,12 @@
 from django.db import models
 from country.models import Country
 from language.models import Language
+from own_packages.abstractclass import AbstractCLass
 from relation.models import PrimaryKeysOfImages
 from gallery.models import Image
 
 
-class Region(models.Model):
+class Region(AbstractCLass):
     region_name = models.CharField(max_length=255)
     # region_info = models.TextField()
     region_url = models.CharField(max_length=500)
