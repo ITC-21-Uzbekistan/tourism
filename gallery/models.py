@@ -3,6 +3,7 @@ from django.db import models
 # from region.models import Region
 # from shrine.models import Shrine
 # from tour.models import Tour
+from country.models import Country
 from language.models import Language
 from own_packages.abstractclass import AbstractCLass
 
@@ -21,7 +22,7 @@ class ContentTypeImage(models.Model):
 
 
 class Image(AbstractCLass):
-    # country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+    country = models.ManyToManyField(Country, db_table="country_images")
     # region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     # shrine = models.ForeignKey(Shrine, on_delete=models.SET_NULL, null=True)
     # tour = models.ForeignKey(Tour, on_delete=models.SET_NULL, null=True)
