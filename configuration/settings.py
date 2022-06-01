@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'relation',
     'language',
     'auth_user',
+    'testSerializer',
 
     'rest_framework',
     'corsheaders',
