@@ -31,7 +31,7 @@ urlpatterns = [
     path('auth/', include('auth_user.urls')),
     path('', include('language.urls')),
 
-    path('testsomething/', include('testSerializer.urls')),
+    # path('testsomething/', include('testSerializer.urls')),
 ]
 urlpatterns += doc_url
 
