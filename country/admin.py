@@ -3,7 +3,7 @@ from .models import ContentCountry, Country
 
 
 class CountryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'country_name', 'country_info', 'country_url', 'country_meta_keywords']
+    list_display = ['id', 'country_name', 'country_url', 'country_meta_keywords']
 
 
 class ContentCountryAdmin(admin.ModelAdmin):
