@@ -18,7 +18,7 @@ class Country(models.Model):
 
 class Content(models.Model):
     lang = models.ForeignKey(Lang, on_delete=models.CASCADE)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, related_name='country', on_delete=models.CASCADE)
     country_name = models.CharField(max_length=255)
     country_info = models.TextField()
 

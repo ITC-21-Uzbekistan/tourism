@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import QuerySet
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import filters, status
 from rest_framework.decorators import api_view
@@ -6,7 +7,8 @@ from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.generics import (GenericAPIView, ListAPIView, CreateAPIView,
-                                     DestroyAPIView, RetrieveAPIView, UpdateAPIView, ListCreateAPIView)
+                                     DestroyAPIView, RetrieveAPIView, UpdateAPIView, ListCreateAPIView,
+                                     get_object_or_404)
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .pagination import CountryPagination
@@ -137,13 +139,15 @@ class CreateCountryView(CreateAPIView):
     serializer_class = CountrySerializer
     pagination_class = CountryPagination
     filter_backends = (filters.SearchFilter,)
-    permission_classes = [IsAdminUser, ]
-    authentication_classes = [JWTAuthentication, ]
-    parser_classes = [MultiPartParser, ]
+    # permission_classes = [IsAdminUser, ]
+    # authentication_classes = [JWTAuthentication, ]
+    # parser_classes = [MultiPartParser, ]
 
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.get_serializer_class()
         kwargs.setdefault('context', self.get_serializer_context())
+        # kwargs.setdefault('data')
+        kwargs["data"]["country_url"] = clear_string(kwargs.get("data").get('country_name'))
         return serializer_class(*args, **kwargs)
 
     def create(self, request, *args, **kwargs):
@@ -211,10 +215,12 @@ class RetrieveCountryView(GenericAPIView):
     parser_classes = [JSONParser, ]
 
     def retrieve(self, request, *args, **kwargs):
-        # lang = request.get_full_path().split('/')[1]
-        lang = 'uz'
-        instance = self.queryset.filter(language__language_short__icontains=lang).\
-            filter(country__country_name=kwargs.get("country", "uzbekistan")).first()
+        lang = request.headers['lang']
+        try:
+            instance = self.queryset.filter(language__language_short__icontains=lang).\
+                filter(country_id=kwargs.get("pk", None)).first()
+        except Exception as ex:
+            return Response({"message": "country not found"}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
@@ -223,18 +229,37 @@ class RetrieveCountryView(GenericAPIView):
         return self.retrieve(request, *args, **kwargs)
 
 
-class ListCreateContentCountryView(ListCreateAPIView):
-    queryset = Country.objects.filter(is_delete=False)
+class ListContentCountryView(ListAPIView):
+    queryset = ContentCountry.objects.all()
     serializer_class = ContentCountrySerializer
     pagination_class = CountryPagination
     filter_backends = (filters.SearchFilter,)
-    permission_classes = [IsAdminUser, ]
-    authentication_classes = [JWTAuthentication, ]
     parser_classes = [MultiPartParser, ]
+
+    def list(self, request, *args, **kwargs):
+        lang = request.headers['lang']
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.filter(language__language_short__icontains=lang)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     @swagger_auto_schema(operation_summary="Davlatlar ro'yhatini ko'rish tillar bilan", )
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
+
+class CreateContentCountryView(CreateAPIView):
+    queryset = ContentCountry.objects.all()
+    serializer_class = ContentCountrySerializer
+    # permission_classes = [IsAdminUser, ]
+    # authentication_classes = [JWTAuthentication, ]
+    parser_classes = [MultiPartParser, ]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -246,4 +271,3 @@ class ListCreateContentCountryView(ListCreateAPIView):
     @swagger_auto_schema(operation_summary="Yangi Davlat kiritish tillar boyicha",)
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
-

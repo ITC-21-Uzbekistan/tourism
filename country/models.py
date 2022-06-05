@@ -25,3 +25,6 @@ class ContentCountry(models.Model):
     country_name = models.CharField(max_length=255)
     country_info = models.TextField()
 
+    class Meta:
+        ordering = ['id']
+
