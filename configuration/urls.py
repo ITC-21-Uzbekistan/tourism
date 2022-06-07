@@ -22,7 +22,7 @@ from .yasg import urlpatterns as doc_url
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # path('country/', include('country.urls')),
+    path('country/', include('country.urls')),
     path('region/', include('region.urls')),
     path('shrine/', include('shrine.urls')),
     path('tour/', include('tour.urls')),
