@@ -26,6 +26,7 @@ class ContentSerializer(serializers.ModelSerializer):
 
 
 class CountryCreateSerializer(serializers.ModelSerializer):
+    data = None
     content = ContentSerializer(many=True)
 
     class Meta:
@@ -37,6 +38,8 @@ class CountryCreateSerializer(serializers.ModelSerializer):
         country = Country.objects.create(**validated_data)
         for content_data in contents_data:
             Content.objects.create(country=country, **content_data)
+
+        self.data = FullCountrySerializer(country).data
         return country
 
     def update(self, instance, validated_data):
@@ -49,14 +52,13 @@ class CountryCreateSerializer(serializers.ModelSerializer):
             instance_content.country_info = content.get('country_info', instance_content.country_info)
             instance_content.save()
 
+        self.data = FullCountrySerializer(instance).data
         return instance
 
-    # def data(self):
-    #     self.instance
-    #     return ReturnDict(self.instance, serializer=FullCountrySerializer)
 
-
+# for user
 class CountrySerializer(serializers.ModelSerializer):
+    """This serializer only for user's of the application"""
     country_name = serializers.SerializerMethodField('_get_name')
     country_info = serializers.SerializerMethodField('_get_info')
 
