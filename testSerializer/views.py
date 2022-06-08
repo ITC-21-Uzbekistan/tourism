@@ -1,3 +1,4 @@
+from django.db import transaction
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, filters, permissions
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
@@ -15,12 +16,13 @@ class CountryCreateView(CreateAPIView):
     queryset = Country.objects.all()
     serializer_class = CountryCreateSerializer
 
+    @transaction.atomic
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         # headers = self.get_success_headers(serializer.data)
-        return Response({"massage": "success"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CountryListView(ListAPIView):
@@ -65,7 +67,7 @@ class RetrieveUpdateDestroyCountry(RetrieveUpdateDestroyAPIView):
 
     # def partial_update(self, request, *args, **kwargs):
     #     pass
-
+    @transaction.atomic
     def update(self, request, *args, **kwargs):
         instance_content = self.get_object()
         serializer = CountryCreateSerializer(instance=instance_content, data=request.data)
@@ -76,6 +78,7 @@ class RetrieveUpdateDestroyCountry(RetrieveUpdateDestroyAPIView):
             serializer.save()
             return Response(serializer.data, status=HTTP_201_CREATED)
 
+    @transaction.atomic
     def destroy(self, request, *args, **kwargs):
         country = self.get_object()
         country.delete()

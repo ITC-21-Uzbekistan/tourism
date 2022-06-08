@@ -33,13 +33,14 @@ class CountryCreateSerializer(serializers.ModelSerializer):
         model = Country
         fields = ['id', 'content', 'name']
 
+    @transaction.atomic
     def create(self, validated_data):
         contents_data = validated_data.pop("content")
         country = Country.objects.create(**validated_data)
         for content_data in contents_data:
             Content.objects.create(country=country, **content_data)
 
-        self.data = FullCountrySerializer(country).data
+        # self.data = FullCountrySerializer(country).data
         return country
 
     def update(self, instance, validated_data):
@@ -52,8 +53,13 @@ class CountryCreateSerializer(serializers.ModelSerializer):
             instance_content.country_info = content.get('country_info', instance_content.country_info)
             instance_content.save()
 
-        self.data = FullCountrySerializer(instance).data
+        # self.data = FullCountrySerializer(instance).data
         return instance
+
+    @property
+    def data(self):
+        ret = FullCountrySerializer(self.instance).data
+        return ReturnDict(ret, serializer=FullCountrySerializer)
 
 
 # for user
