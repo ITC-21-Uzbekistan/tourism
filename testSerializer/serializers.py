@@ -26,25 +26,22 @@ class ContentSerializer(serializers.ModelSerializer):
 
 
 class CountryCreateSerializer(serializers.ModelSerializer):
-    data = None
-    content = ContentSerializer(many=True)
+    contents = ContentSerializer(many=True)
 
     class Meta:
         model = Country
-        fields = ['id', 'content', 'name']
+        fields = ['id', 'contents', 'name']
 
-    @transaction.atomic
     def create(self, validated_data):
-        contents_data = validated_data.pop("content")
+        contents_data = validated_data.pop("contents")
         country = Country.objects.create(**validated_data)
         for content_data in contents_data:
             Content.objects.create(country=country, **content_data)
 
-        # self.data = FullCountrySerializer(country).data
         return country
 
     def update(self, instance, validated_data):
-        contents = validated_data.pop("content")
+        contents = validated_data.pop("contents")
         instance.name = validated_data.get('name', instance.name)
 
         for content in contents:
@@ -53,7 +50,6 @@ class CountryCreateSerializer(serializers.ModelSerializer):
             instance_content.country_info = content.get('country_info', instance_content.country_info)
             instance_content.save()
 
-        # self.data = FullCountrySerializer(instance).data
         return instance
 
     @property
@@ -93,3 +89,23 @@ class FullCountrySerializer(serializers.ModelSerializer):
         contents = Content.objects.filter(country=this)
         serializer = ContentSerializer(contents, many=True)
         return serializer.data
+
+    def create(self, validated_data):
+        contents_data = validated_data.pop("contents")
+        country = Country.objects.create(**validated_data)
+        for content_data in contents_data:
+            Content.objects.create(country=country, **content_data)
+
+        return country
+
+    def update(self, instance, validated_data):
+        contents = validated_data.pop("contents")
+        instance.name = validated_data.get('name', instance.name)
+
+        for content in contents:
+            instance_content = Content.objects.get(country=instance, lang_id=content['lang'])
+            instance_content.country_name = content.get('country_name', instance_content.country_name)
+            instance_content.country_info = content.get('country_info', instance_content.country_info)
+            instance_content.save()
+
+        return instance

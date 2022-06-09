@@ -1,3 +1,4 @@
+import requests
 from django.db import transaction
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, filters, permissions
@@ -51,7 +52,9 @@ class CountryListView(ListAPIView):
 
 class RetrieveUpdateDestroyCountry(RetrieveUpdateDestroyAPIView):
     queryset = Country.objects.all()
-    serializer_class = CountrySerializer
+    # serializer_class = CountrySerializer
+    # serializer_class = CountryCreateSerializer
+    serializer_class = FullCountrySerializer
     permission_classes = [permissions.AllowAny]
 
     def retrieve(self, request, *args, **kwargs):
@@ -62,7 +65,7 @@ class RetrieveUpdateDestroyCountry(RetrieveUpdateDestroyAPIView):
             return Response({'message': 'This language does not exist'}, status=HTTP_404_NOT_FOUND)
         else:
             country = self.get_object()
-            serializer = CountrySerializer(country, context={'lang': lang.short})
+            serializer = self.serializer_class(country, context={'lang': lang.short})
             return Response(serializer.data, status=HTTP_200_OK)
 
     # def partial_update(self, request, *args, **kwargs):
@@ -87,7 +90,6 @@ class RetrieveUpdateDestroyCountry(RetrieveUpdateDestroyAPIView):
 
 
 # class UpdateCountryView(ge)
-
 
 class FullCountryView(ListAPIView):
     queryset = Country.objects.all()
