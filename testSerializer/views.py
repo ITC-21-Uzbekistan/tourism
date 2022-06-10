@@ -1,15 +1,14 @@
-import requests
 from django.db import transaction
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, filters, permissions
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.status import (HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_201_CREATED,
-                                   HTTP_501_NOT_IMPLEMENTED, HTTP_204_NO_CONTENT, )
+                                   HTTP_204_NO_CONTENT, )
 
-from country.pagination import CountryPagination
+from apps.country.pagination import CountryPagination
 from .models import Lang, Content, Country
-from .serializers import ContentSerializer, CountrySerializer, LangSerializer, CountryCreateSerializer, \
+from .serializers import ContentSerializer, CountryCreateSerializer, \
     FullCountrySerializer
 
 

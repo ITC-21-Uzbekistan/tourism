@@ -40,14 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'country',
-    'region',
+    'apps.country',
+    'apps.region',
     'shrine',
     'tour',
     'gallery',
     'relation',
     'language',
-    'auth_user',
+    'apps.auth_user',
     'testSerializer',
 
     'rest_framework',
@@ -103,25 +103,13 @@ WSGI_APPLICATION = 'configuration.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-if not DEBUG:
-    DATABASES = {
+
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'd29t4c4fic4d9l',
-            'USER': 'gzvbgsdjnjufix',
-            'PASSWORD': 'fa6359b8368fcb37930e7fe83378808ea6f7bffe02473701daacf1e9d7843c71',
-            'HOST': 'ec2-52-200-215-149.compute-1.amazonaws.com',
-            'PORT': '5432',
-        }
-    }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

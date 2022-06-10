@@ -1,5 +1,5 @@
 from django.db import models
-from country.models import Country
+from apps.country.models import Country
 from language.models import Language
 from own_packages.abstractclass import AbstractCLass
 from relation.models import PrimaryKeysOfImages

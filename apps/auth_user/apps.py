@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CountryConfig(AppConfig):
+class AuthUserConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'country'
+    name = 'apps.auth_user'

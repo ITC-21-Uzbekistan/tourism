@@ -26,5 +26,6 @@ class ContentCountry(models.Model):
     country_info = models.TextField()
 
     class Meta:
+
         ordering = ['id']
 

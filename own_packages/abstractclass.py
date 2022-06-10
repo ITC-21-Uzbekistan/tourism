@@ -1,8 +1,4 @@
-import datetime
-
 from django.db import models
-
-from auth_user.models import User
 
 
 class AbstractCLass(models.Model):
@@ -11,7 +7,7 @@ class AbstractCLass(models.Model):
     # created_by = models.IntegerField(null=True, blank=True)
 
     # bu field bilan migratsiya qila olmadim!!!
-    # created_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
+    # created_at = models.DateTimeField(auto_now_add=True, default=.datetime.now())
 
     class Meta:
         abstract = True
