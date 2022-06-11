@@ -22,14 +22,16 @@ from .yasg import urlpatterns as doc_url
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # path('country/', include('country.urls')),
-    path('region/', include('region.urls')),
+    path('country/', include('apps.country.urls')),
+    path('region/', include('apps.region.urls')),
     path('shrine/', include('shrine.urls')),
     path('tour/', include('tour.urls')),
-    path('gallery/', include('gallery.urls')),
+    path('gallery/', include('apps.gallery.urls')),
     path('relation/', include('relation.urls')),
-    path('auth/', include('auth_user.urls')),
-    path('', include('language.urls')),
+    path('auth/', include('apps.auth_user.urls')),
+    path('', include('apps.language.urls')),
+
+    path('testsomething/', include('testSerializer.urls')),
 ]
 urlpatterns += doc_url
 

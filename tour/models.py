@@ -1,10 +1,10 @@
 from django.db import models
 
-from language.models import Language
+from apps.language.models import Language
 from own_packages.abstractclass import AbstractCLass
 from relation.models import PrimaryKeysOfImages
 from shrine.models import Shrine
-from gallery.models import Image
+from apps.gallery.models import Image
 
 
 class TypeTour(models.Model):
