@@ -1,10 +1,9 @@
 from django.db import models
 
-from gallery.models import Image
 from own_packages.abstractclass import AbstractCLass
 from relation.models import PrimaryKeysOfImages
-from language.models import Language
-from gallery.models import Image
+from apps.language.models import Language
+from apps.gallery.models import Image
 
 
 class Country(AbstractCLass):

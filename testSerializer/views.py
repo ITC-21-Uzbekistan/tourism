@@ -52,8 +52,8 @@ class CountryListView(ListAPIView):
 class RetrieveUpdateDestroyCountry(RetrieveUpdateDestroyAPIView):
     queryset = Country.objects.all()
     # serializer_class = CountrySerializer
-    # serializer_class = CountryCreateSerializer
-    serializer_class = FullCountrySerializer
+    serializer_class = CountryCreateSerializer
+    # serializer_class = FullCountrySerializer
     permission_classes = [permissions.AllowAny]
 
     def retrieve(self, request, *args, **kwargs):

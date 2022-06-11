@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     'apps.region',
     'shrine',
     'tour',
-    'gallery',
+    'apps.gallery',
     'relation',
-    'language',
+    'apps.language',
     'apps.auth_user',
     'testSerializer',
 

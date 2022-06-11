@@ -52,8 +52,15 @@ class CountryCreateSerializer(serializers.ModelSerializer):
 
         return instance
 
+    def _get_contents(self,):
+        contents = Content.objects.filter(country=self.instance)
+        serializer = ContentSerializer(contents, many=True)
+        return serializer.data
+
     @property
     def data(self):
+        # ret = super().data
+        # return ReturnDict(ret, serializer=self)
         ret = FullCountrySerializer(self.instance).data
         return ReturnDict(ret, serializer=FullCountrySerializer)
 

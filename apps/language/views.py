@@ -5,7 +5,7 @@ from rest_framework.generics import (GenericAPIView, CreateAPIView, ListCreateAP
                                      DestroyAPIView, UpdateAPIView, RetrieveAPIView,
                                      RetrieveUpdateDestroyAPIView)
 from rest_framework.mixins import UpdateModelMixin, DestroyModelMixin
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 # from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 # from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -22,7 +22,7 @@ class ListCreateLanguageView(ListCreateAPIView):
     filter_backends = (filters.SearchFilter,)
     # permission_classes = [IsAdminUser, ]
     # authentication_classes = [JWTAuthentication, ]
-    parser_classes = [MultiPartParser, ]
+    parser_classes = [JSONParser, ]
 
     @swagger_auto_schema(operation_summary="Tillar ro'yhatini ko'rish", )
     def get(self, request, *args, **kwargs):

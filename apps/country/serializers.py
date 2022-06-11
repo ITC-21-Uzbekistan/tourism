@@ -1,8 +1,6 @@
 from rest_framework import serializers
 
-from own_packages.clear_string import clear_string
 from .models import Country, ContentCountry
-from gallery.models import Image
 
 
 class CountrySerializer(serializers.ModelSerializer):

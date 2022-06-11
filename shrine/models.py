@@ -1,10 +1,10 @@
 from django.db import models
 from apps.country.models import Country
-from language.models import Language
+from apps.language.models import Language
 from own_packages.abstractclass import AbstractCLass
 from apps.region.models import Region
 from relation.models import PrimaryKeysOfImages
-from gallery.models import Image
+from apps.gallery.models import Image
 
 
 class Shrine(AbstractCLass):

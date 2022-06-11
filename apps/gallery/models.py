@@ -4,7 +4,7 @@ from django.db import models
 # from shrine.models import Shrine
 # from tour.models import Tour
 # from country.models import Country
-from language.models import Language
+from apps.language.models import Language
 from own_packages.abstractclass import AbstractCLass
 
 
